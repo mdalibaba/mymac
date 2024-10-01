@@ -1,0 +1,189 @@
+<template>
+    <lightning-quick-action-panel header="Create Candidate">
+        <div>     <!--section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open  "-->
+     <div style="width: 100%; "> 
+        <!--div class="slds-modal__container mycontainer"-->
+            <!-- Custom Header -->
+            <!--header class="slds-modal__header custom-modal-header" style="background:#08475b;color:white;">
+                <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close" onclick={handleClose}></lightning-button-icon-->
+                <!--h2  class="slds-text-heading_medium">{headerText}</h2-->
+            <!--/header-->
+
+            <!-- Modal Body Content -->
+            <!--div class="slds-modal__content slds-p-around_medium"-->
+                <lightning-card title="Select Candidate " icon-name="standard:buyer_group_qualifier">
+                    <!-- Search Fields -->
+                    <div class="slds-p-around_medium">
+                    
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                              <span>            <lightning-input label="Name" placeholder="please enter Name.." onchange={handleNameChange}></lightning-input>
+                              </span>
+                            </div>
+                            <div class="slds-col">
+                              <span>            <lightning-input label="Address" placeholder="please enter State Name.." value={searchAddress} onchange={handleAddressChange}></lightning-input>
+                              </span>
+                            </div>
+                            <div class="slds-col" style="padding-top: 22px;">
+                              <span>            <lightning-button label="Search" onclick={handleSearch} class="slds-m-top_medium"></lightning-button>
+                              </span>
+                            </div>
+                            <div class="slds-col" style="padding-top: 22px;">
+                                <span>            <lightning-button label="Create Candidate" onclick={handlepopup} class="slds-m-top_medium"></lightning-button>
+                                </span>
+                              </div>
+                          </div>
+                    
+                    </div>
+            
+                    <!-- Contact Results Table -->
+                    <template if:true={applications.length}>
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                            <thead>
+                                <tr>
+                                    <th>  </th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Overall Stage</th> 
+                                    <th>State</th>
+                                    <!--th>Postal Code</th-->
+                                </tr>
+                            </thead>
+                            <tbody><template if:true={isApp}>
+                                <template for:each={applications} for:item="app">
+                                    <tr key={app.Id}>
+                                        <td>
+                                            <input type="checkbox" data-id={app.Id} onchange={handleCheckboxChange}/>
+                                        </td>
+                                        <td>{app.HRMSUS__Candidate_Name__c}</td>
+                                        <td>{app.rightpm__Position_Title_New__c}</td>
+                                        <td>{app.HRMSUS__Overall_Stage__c}</td>
+                                        <td>{app.HRMSUS__Candidate1__r.HRMSUS__State__c}</td>
+                                        <!--td>{app.HRMSUS__Candidate1__r.HRMSUS__State__c}</td-->
+                                        <!--td>{app.MailingPostalCode}</td-->
+                                    </tr>
+                                </template></template>
+                                
+                            </tbody>
+                        </table>
+                    </template>
+            
+                    <!-- Button to create placement records -->
+                         <!--lightning-button label="Create Placements" onclick={createPlacements} class="slds-m-top_medium"></lightning-button-->
+                 </lightning-card>
+            <!--/div-->
+
+            <!-- Custom Footer -->
+            <!--footer class="slds-modal__footer custom-modal-footer" style="text-align: center;">
+                <lightning-button label="Cancel" onclick={handleClose}></lightning-button>
+                <span style="padding:10px;"></span>
+                <lightning-button label="Create Placements" onclick={createPlacements} class="slds-m-top_medium"></lightning-button>
+            </footer-->
+        <!--/div-->
+    <!--/section-->
+    
+    </div>
+    
+    <template if:true={isModalOpen}>
+        <section class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Header -->
+                <header class="slds-modal__header" style="background:#2d5e7d;color:white;">
+                    <!--lightning-button-icon icon-name="utility:close"
+                                           alternative-text="Close"
+                                           onclick={closeModal}></lightning-button-icon-->
+                    <h2 class="slds-text-heading_medium">{header}</h2>
+                </header>
+    
+                <!-- Modal/Popup Body -->
+                <div class="slds-modal__content slds-p-around_medium" style="border: 1px solid lightblue;">
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <!-- First Name and Middle Name -->
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="First Name" required value={firstName} onchange={handleInputChange} data-id="firstName"></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Middle Name" value={middleName} onchange={handleInputChange} data-id="middleName"></lightning-input>
+                        </div>
+        
+                        <!-- Last Name and Email -->
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Last Name" required value={lastName} onchange={handleInputChange} data-id="lastName"></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Email" required type="email" value={email} onchange={handleInputChange} data-id="email"></lightning-input>
+                        </div>
+        
+                        <!-- Primary Number and Address -->
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Primary Number" required type="tel" value={primaryNumber} onchange={handleInputChange} data-id="primaryNumber"></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Address (Optional)" value={address1} onchange={handleInputChange} data-id="address1"></lightning-input>
+                        </div>
+        
+                        <!-- Address 2 and City -->
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Address 2 (Optional)" value={address2} onchange={handleInputChange} data-id="address2"></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="City (Optional)" value={city} onchange={handleInputChange} data-id="city"></lightning-input>
+                        </div>
+        
+                        <!-- Country and State -->
+                        <div class="slds-col slds-size_1-of-2">
+                            <!--lightning-input label="Country (Optional)" value={country} onchange={handleInputChange} data-id="country"></lightning-input-->
+                            <template if:true={countryOptions}>
+                                <lightning-combobox 
+                                    name="country" 
+                                    label="Country" 
+                                    value={country}
+                                    placeholder="Select a Country" 
+                                    options={countryOptions} 
+                                    onchange={handleCountryChange}>
+                                </lightning-combobox>
+                            </template>
+                            <template if:true={error}>
+                                <p class="slds-text-color_error">Error: {error}</p>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="State" required value={state} onchange={handleInputChange} data-id="state"></lightning-input>
+                        </div>
+        
+                        <!-- Postal Code -->
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input label="Postal Code" required type="number" value={postalCode} onchange={handleInputChange} data-id="postalCode"></lightning-input>
+                        </div>
+                    </div>
+            
+                        <!-- Submit Button -->
+                        <!--lightning-button label="Submit" variant="brand" onclick={handleSubmit}></lightning-button-->
+                     
+                </div>
+    
+                <!-- Modal/Popup Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="brand" data-id="myappli"  label="Save" onclick={handleSubmit}></lightning-button>
+                </footer>
+            </div>
+        </section>
+    
+        <!-- Background Overlay -->
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</div>
+    <div slot="footer" style="text-align:center;">
+        <div style="text-align:center;">
+            <lightning-button label="Cancel" onclick={handleClose}></lightning-button>
+            <span style="padding:10px;"></span>
+            <lightning-button label="Create Placements" data-id="myButton"  onclick={createPlacements} class="slds-m-top_medium"></lightning-button>
+        </div>
+    </div>
+
+
+
+
+</lightning-quick-action-panel>
+ </template>

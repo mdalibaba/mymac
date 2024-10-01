@@ -1,0 +1,29 @@
+
+
+.mycontainer{
+    
+    
+    }  
+    .oneRecordActionWrapper.overridePresent .actionBody {
+    background-color : white;
+    }
+    .slds-template_default {
+    background-color : white;
+    
+     }
+      
+     .uiModal--medium .modal-container {
+      width: 100%;
+      max-width: 956px;
+      min-width: 480px;
+  }
+  :host {
+   --slds-c-modal-content-color-background: rgb(251, 249, 246);
+}
+.slds-modal__header {
+  background-color: #08475b;
+}
+.slds-modal__header {
+   background-color: #08475b; /* Change the header color to blue */
+   color: white; /* Change text color to white for better contrast */
+}
