@@ -1,0 +1,80 @@
+.dummyClass{color:black;}
+
+/* Increase the size of the quick action panel */
+.custom-panel .slds-modal__container {
+    width: 90vw; /* 90% of the viewport width */
+    height: 90vh; /* 90% of the viewport height */
+    max-width: none; /* Remove max-width restriction */
+    max-height: none; /* Remove max-height restriction */
+    overflow-x: scroll;
+}
+
+/* Optionally, customize the inner content area */
+.custom-panel .content {
+    padding: 20px;
+    overflow-y: auto; /* Handle overflow of content */
+    height: 100%; /* Ensure content takes full height */
+    overflow-x: scroll;
+}
+.mycard {
+    overflow: scroll;
+}
+.mytble {
+    overflow: scroll;
+    font-size: 12px;
+}
+.mytble td {
+    width: 5px;
+    margin: 0px;
+    text-align: -webkit-center;
+   
+     
+}
+.mytble th {
+    padding: 0px;
+    margin: 0px;
+}
+.myth{
+   /* width: 55px;*/
+    text-align: center;
+    font-size: 12px;
+    width: 1.8cm;
+
+}
+.mycheck{
+
+text-align: center;
+
+position: relative;
+top: 5px;
+ 
+}
+ 
+ th.sticky-col {
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 2;
+  }
+   table {
+        border-collapse: collapse; /* Ensures borders don’t double up */
+        width: 100%;
+    }
+    tr {
+        border: 1px solid black;
+    }
+    .tdcl{
+        text-align: -webkit-center;
+    }
+     table tr th{position: sticky;left: 0;}
+table tr:nth-child(1) th,table tr:nth-child(2) th{z-index: 1;}
+table tr:nth-child(1) th,table tr:nth-child(1) td  {top:0px;position: sticky;}
+table tr:nth-child(1) td {background-color: #eee;}
+
+table tr:nth-child(2) th,table tr:nth-child(2) td{top:15px;position: sticky;}
+table tr:nth-child(2) td {background-color: #eee;}
+    .table-container {
+        max-height: 400px; /* Set the maximum height for vertical scrolling */
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: auto; /* Enable horizontal scrolling */
+        border: 1px solid #ddd; /* Optional: Add border around the table */
+    }

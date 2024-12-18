@@ -1,0 +1,48 @@
+.mycontainer{
+    
+    
+}  
+.oneRecordActionWrapper.overridePresent .actionBody {
+background-color : white;
+}
+.slds-template_default {
+background-color : white;
+
+ }
+  
+ .uiModal--medium .modal-container {
+  width: 100%;
+  max-width: 956px;
+  min-width: 480px;
+}
+:host {
+--slds-c-modal-content-color-background: rgb(251, 249, 246);
+}
+.slds-modal__header {
+background-color: #08475b;
+}
+.slds-modal__header {
+background-color: #08475b; /* Change the header color to blue */
+color: white; /* Change text color to white for better contrast */
+}
+.pagination-controls {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.myinputwidth{
+/*  width: 58%; */
+}
+
+.mytbloc{
+text-align: left;
+ 
+float: left;
+ 
+/* : 8px; */
+border-radius: 8px;
+
+box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 2px 6px 2px rgba(60, 64, 67, .15);
+margin: 0px 15px -4px 0px;
+overflow: hidden;
+}

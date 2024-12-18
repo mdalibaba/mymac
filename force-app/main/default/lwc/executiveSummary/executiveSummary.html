@@ -1,0 +1,214 @@
+<!--
+@description       : 
+@author            : Ali
+@group             : 
+@last modified on  : 12-18-2024
+@last modified by  : Ali
+-->
+<template>
+<lightning-quick-action-panel 
+size="large"
+header=" "  
+class="full-page-panel custom-panel"
+> 
+<template if:true={selectedppd}>
+<div>
+    <!--lightning-quick-action-panel header=""-->
+            <div > <!--class="slds-box slds-theme–default"-->
+                    <lightning-card title="RPM Executive Summary" style="overflow:scroll;" class="mycard" icon-name="custom:custom63">
+                            <br/>
+                            <div style="overflow: scroll;" class="table-container">
+                            <table style="overflow:scroll;" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered mytble">
+                                    <thead>
+                                        <tr class="slds-line-height_reset sticky-row1">
+                                            <th class="sticky-col" scope="col" style="text-align: center;" width="10%">
+                                                <div title="Employee">Worker</div>		
+                                            </th>
+                                            <template for:each={dayslist} for:item="item">
+                                                        
+                                            <th key={item} class="myth" scope="col" colspan = "" width="10%">
+                                                            <div title="">{item}</div>	
+                                            </th>
+                                            </template>
+                                             
+                                                <th class="myth" scope="col" width="10%">
+                                                    <div title="ST Total">ST Total</div>	
+                                            </th>
+                                            <th class="myth" scope="col" width="10%">
+                                                    <div title="OT Total">OT Total</div>	
+                                            </th>
+
+                                        </tr>
+                                        <tr class="slds-line-height_reset sticky-row1" >
+                                            <th class="myth sticky-col " scope="col" style="position: sticky;left: 0; background-color: #f3f3f3;   z-index: 1;">
+                                                    
+                                            </th>
+                                            <th class="myth" scope="col">
+                                                     	
+                                            </th>
+                                             
+
+                                            <th class="myth" scope="col">
+                                                     
+                                            </th>
+                                            
+
+                                            <th class="myth" scope="col">
+                                                     	
+                                            </th>
+                                             
+
+                                            <th class="myth" scope="col">
+                                                     	
+                                            </th>
+                                             
+
+                                            <th class="myth" scope="col">
+                                                     	
+                                            </th>
+                                             
+
+                                            <th class="myth" scope="col">
+                                                    	
+                                            </th>
+                                            
+
+                                            <th class="myth" scope="col">
+                                                     	
+                                            </th>
+                                             
+                                            <th class="myth" scope="col">
+                                                	
+                                        </th>
+                                         
+
+
+                                    </tr>
+                                                
+
+                                                
+                                            <template for:each={finalPrjAss} for:item="item">
+                                                    <tr class="slds-line-height_reset" key={item.wrkId}>
+                                                            <td class="tdcl" scope="row" width="10%">
+                                                                <div style="font-size:12px;" title="Employee">{item.Name}</div>
+                                                            </td>
+                                                            <template for:each={item.Timedata} for:item="prj">
+                                                                        <template  lwc:if ={prj.Sun} for:each={prj.Sun} for:item="p"> 
+                                                                    <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                            <div class="myth " title="Straight Time" ><lightning-input   min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number" ></lightning-input></div>
+                                                                    </td>
+                                                                    
+                                                                        </template>
+                                                                    <template lwc:elseif ={prj.Mon} for:each={prj.Mon} for:item="p"> 
+                                                                        <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                            <div  class="myth" title="Straight Time"><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                    </td>
+                                                                            </template>
+                                                                        <template lwc:elseif ={prj.Tue} for:each={prj.Tue} for:item="p" > 
+                                                                            <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                            </td>
+                                                                            </template>
+                                                                            <template lwc:elseif ={prj.Wed} for:each={prj.Wed} for:item="p"> 
+                                                                                <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                    <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"    onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                            </td>
+                                                                                    
+                                                                                </template>
+                                                                                <template lwc:elseif ={prj.Thu} for:each={prj.Thu} for:item="p"> 
+                                                                                    <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                        <div class="myth" title="Straight Time"><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                                </td>
+                                                                                    
+                                                                            
+                                                                                    </template>
+                                                                                    <template lwc:elseif ={prj.Fri} for:each={prj.Fri} for:item="p"> 
+                                                                                        <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                            <div class="myth" title="Straight Time" ><lightning-input  min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                                    </td>
+                                                                                            
+                                                                                    
+                                                                                        </template>
+                                                                                        <template lwc:elseif ={prj.Sat} for:each={prj.Sat} for:item="p"> 
+                                                                                            <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                                <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                                        </td>
+                                                                                            
+                                                                                    
+                                                                                            </template>
+                                                                                            
+                                                                                            
+                                                                    
+                                                            </template>
+                                                                
+                                                                <td class="tdcl" scope="row"   >
+                                                                    <div class="myth" title="Straight Time Total" > {item.STTotal}  </div>
+                                                            </td>
+                                                                
+                                                                <td class="tdcl" scope="row"   >
+                                                                <div class="myth"  title="Over Time Total" > {item.OTTotal}  </div>
+                                                        </td>
+                                                            
+                                                                    
+                                                            
+
+                                                    </tr>
+                                                </template>
+                                                </thead>
+                                            
+                                    
+                                
+                            </table>
+
+                            </div>
+                            <br/>
+                            <div slot="footer">
+                                    <lightning-button
+                                                                        variant="neutral"
+                                                                        label="Cancel" onclick={handleCancel}
+                                                                        ></lightning-button>
+                                    <lightning-button
+                                                                        variant="brand"
+                                                                        label="Save" onclick={handleCreate}
+                                                                        class="slds-m-left_x-small"
+                                                                        ></lightning-button>
+                            </div>
+                    </lightning-card>
+            </div>
+    <!--/lightning-quick-action-panel-->
+</div>
+</template>
+<template if:false={selectedppd}>
+<!--lightning-quick-action-panel header=""-->
+    <div class="slds-box slds-theme–default"  style="min-height:500px;">
+            <lightning-card title="Select the Pay Period" icon-name="custom:custom63"  >
+                    <lightning-combobox
+                                                            name="PayPeriod"
+                                                            label=""
+                                                            placeholder="Choose payperiod"
+                                                            value={chosenValue}
+                                                            onchange={handleChange}
+                                                            options={Payperiodlist}>
+                    </lightning-combobox>
+                    <p></p>
+                    <!--Selected Value:
+                    <lightning-formatted-text title="Chosen Key" value={selectedValue}></lightning-formatted-text>-->
+
+
+                    <div slot="footer">
+                            <lightning-button
+                                                                variant="neutral"
+                                                                label="Cancel" onclick={handleOkay}
+                                                                ></lightning-button>
+                            <lightning-button
+                                                                variant="brand"
+                                                                label="Next" onclick={handleNext}
+                                                                class="slds-m-left_x-small"
+                                                                ></lightning-button>
+                    </div>
+            </lightning-card>
+    </div>
+<!--/lightning-quick-action-panel-->
+</template>
+</lightning-quick-action-panel>
+</template>

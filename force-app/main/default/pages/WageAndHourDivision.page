@@ -1,0 +1,681 @@
+<apex:page standardController="BZP__PayPeriod__c" extensions="WageAndHourDivision"      showHeader="false" applyHtmlTag="false" docType="html-5.0">
+    <head>
+        <style type="text/css" > 
+            
+            @page {
+            margin: 3mm;
+            margin-top: 0mm;
+            margin-bottom: 0mm;
+            size: A4 landscape;
+            page-break-inside: avoid !important;
+            @top-center {
+            content: element(header);
+            }
+            
+            @bottom-left {
+            content: element(footer);
+            }
+            }
+            
+            div.header {
+            padding: 10px;    
+            position: running(header);
+            }
+            div.footer {
+            
+            display: block;
+            padding: 5px;
+            position: running(footer);
+            
+            }   
+            .pagenumber:before {
+            content: counter(page);
+            }
+            
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .yeartable tr td{
+            width:4em;
+            font-size:10px; 
+            border-bottom: 1px solid;
+            border-left: 1px solid; 
+            min-height:3em;
+            }
+            .yeartable tr td:first-child{
+            width:7em !important;
+            border-left: 0px solid;
+            }
+            
+            .yeartable tr:first-child td{
+            text-align: center;
+            padding: 0px;
+            border-top: 1px solid;
+            }
+            
+            table.employeeTable {       
+            font-size:10px;
+            border: 1px solid;
+            }
+            table.employeeTable th {
+            /* border: 1px solid;*/
+            }
+            table.employeeTable tr td {
+            /*border: 1px solid;*/
+            min-height:0.5em;
+            padding:0px,0px,0px,0px;        
+            }
+            
+            tr.nobordertop td {
+            border-top: 0px;
+            }
+            tr.noborderbottom td {
+            border-bottom: 0px;
+            }    
+            
+              .mtab {
+            width: 100%;
+            border-collapse: collapse;
+        }
+       .mtab th, .mtab td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .print-button {
+            margin-bottom: 10px;
+        }
+        .slant-line {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    background: linear-gradient(45deg, transparent 49%, black 49%, black 51%, transparent 51%);
+}
+         @media print {
+           
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Optional: Ensure content spans the full page */
+            .content {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            
+
+            /* Hide elements like buttons or other non-printable items */
+            .no-print {
+                display: none !important;
+            }
+        }
+        </style>
+        
+    </head>
+    <div style=" padding:10px;height:auto;width:auto;overflow: auto;"><!--style="background:#444444;padding:10px;height:auto;width:auto;overflow: auto;"-->
+    <div style="page-break:avoid;background:white;padding:2px;position:relative;">  
+        <apex:variable var="wbool" value="{!0}"/>
+        <div class=" "    >
+            <table width="100%" style="margin-right:25px;" class="">
+                <tr>
+                    <td style="text-align:left;width:20%;font-family: sans-serif;"><b style="font-size:15px;">U.S. Department of Labor</b> <br/><div style="font-size:12px; ">Wage and Hour Division</div><br/></td>
+                    <td style="text-align:center;width:60%;font-family: sans-serif;"><b style="padding-left:50px;font-size:15px;">PAYROLL </b><br/><div style="font-size:12px;font-weight: bold;">For contractor's optional use; see instructions at dol.gov/agencies/whd/forms/wh347</div>
+                        <br/> <div style="padding-left:40px;font-size:9px;font-family: sans-serif;font-style: italic;font-weight: 600;">Persons are not required to respond to the collection of information unless it displays a currently valid OMB control number</div>
+                    </td>
+                    <td style="text-align:right;font-family: sans-serif; "> <apex:image value="{!$Resource.wageandhour}" width="140" height="65"  /><br/> <div style="font-size:11px; ">Revised December 2008</div></td>
+                </tr>
+            </table>
+        </div>
+        
+        <apex:form >
+            
+            <div style="padding-top:4px;">
+                <table width="100%" cellspacing="0" cellpadding="0" class="employeeTable "  border ="1" style=" border-left:none;border-right:none;border-bottom:none;">
+                    
+                    <tr class="noborderbottom" >
+                        <td colspan="2" style="font-size:10px;border-left:none;border-top:none;width:50%;">NAME OF CONTRACTOR <input type="checkbox" value="false" disabled="true"/>
+                            OR SUBCONTRACTOR <input type="checkbox" style=" " value="true" disabled="true" checked="true"/>
+                            <br/> <div style="width:100%;text-align:center;"> <!--{!BZP__PayPeriod__c.BZP__PaySchedule__r.BZP__Company__r.Name}-->Right PM LLC</div>
+                        </td>
+                        <td colspan="3" style="font-size:10px;width:40%;">ADDRESS<br/> 
+                            <div style="width:100%;text-align:center;">{!BZP__PayPeriod__c.BZP__PaySchedule__r.BZP__Company__r.HRMSUS__Address__c},{!BZP__PayPeriod__c.BZP__PaySchedule__r.BZP__Company__r.HRMSUS__City__c},{!BZP__PayPeriod__c.BZP__PaySchedule__r.BZP__Company__r.HRMSUS__State__c},{!BZP__PayPeriod__c.BZP__PaySchedule__r.BZP__Company__r.HRMSUS__Zip_Code__c},{!BZP__PayPeriod__c.BZP__PaySchedule__r.BZP__Company__r.HRMSUS__Country__c}</div>
+                        </td>
+                        <td style="font-size:11px; border-right:none;">OMB No. 1235-0008<br/>  Expires 09/30/2026<br/> </td>
+                    </tr>
+                    
+                    
+                </table>
+                <table width="100%" cellspacing="0" cellpadding="0" class="employeeTable"  border ="1" style=" border-left:none;border-right:none; ">
+                    <tr class="noborderbottom" >
+                        <td style=" border-left:none;width:25%;font-size:10px;">PAYROLL NO.   <div style="text-align:center">{!BZP__PayPeriod__c.Name}</div></td>
+                        <td style=" width:25%;font-size:10px;">FOR WEEK ENDING <div style="text-align:center"><apex:outputText value="{0,date,MM/dd/yyyy}" Style="font-size:11px;text-align:center;padding-right:5px;"><apex:param value="{!BZP__PayPeriod__c.BZP__PeriodEnding__c}"/></apex:outputText></div></td>
+                        <td style=" width:25%;font-size:10px;">PROJECT AND LOCATION <br/> <div style="width:100%;text-align:center;">{!prj.HRMSUS__Account__r.Name} / {!prj.Name} /  {!prj.HRMSUS__Location__r.Name},{!prj.HRMSUS__Location__r.HRMSUS__Address_Line_1__c},{!prj.HRMSUS__Location__r.HRMSUS__City__c},{!prj.HRMSUS__Location__r.HRMSUS__State__c},{!prj.HRMSUS__Location__r.HRMSUS__Country__c},{!prj.HRMSUS__Location__r.HRMSUS__Postal_Code1__c}</div>
+                        </td>
+                        <td   style="border-right:none; width:25%; font-size:10px;">PROJECT OR CONTRACT NO.<br/>
+                        {!prj.rightpm__Contract_No__c}
+                        <br/></td>
+                    </tr>
+                </table>
+                <table width="100%" cellspacing="0" cellpadding="0" class="employeeTable"  border ="1" style=" border-left:none;border-right:none;border-bottom:none;">
+                    <tr>
+                        <td style="border-bottom:none;text-align:center;border-left:none;" > (1)</td >
+                        <td style="border-bottom:none;text-align:center;"> (2)</td >
+                        <td style="border-bottom:none;text-align:center;"> (3)</td >
+                        <td style="border-bottom:none;text-align:center;">  </td>
+                        <td style="border-bottom:none;text-align:center;"> (4)DAY AND DATE</td >
+                        
+                        <td style="border-bottom:none;text-align:center;"> (5)</td >
+                        <td style="border-bottom:none;text-align:center;"> (6)</td >
+                        <td style="border-bottom:none;text-align:center;"> (7)</td >
+                        <td style="border-bottom:none;text-align:center;"> (8) </td >
+                        <td style="border-bottom:none;text-align:center;border-right:none;"> (9)</td >   
+                    </tr>
+                    <tr>
+                        <td style="border-top:none;border-left:none;text-align:center;">NAME AND INDIVIDUAL IDENTIFYING NUMBER <br/> (e.g., LAST FOUR DIGITS OF SOCIAL SECURITYNUMBER) OF WORKER</td >
+                        <td style="border-top:none;"> <div style="height: 92px;
+    transform: matrix(0, -1, 1, 0, 30, 19);
+    width: 46px;">No.Of <br/>WITHHOLDINGS<br/>EXCEPTIONS</div><!--apex:image value="{!$Resource.noofwithholding}" width="30" height="70"  /--> </td >
+                        <td style="border-top:none;text-align:center;">WORK CLASSIFICATION</td >
+                        <td style="border-top:none;"> 
+                        <div style="height: 92px;
+    transform: matrix(0, -1, 1, 0, 40, 14);
+    width: 17px; font-size:10px;">OT.OR.ST.</div>
+                        </td >
+                        <td style="border-top:none;padding:0px; text-align:center;font-size:9px;">
+                            <table   border="1"  id="table11" style=" border:1px solid black;border-collapse: collapse;padding:0px;border-bottom:none;border-right: none;border-left: none;">
+                                <tr>
+                                    <!--td  style="min-width:22px;">Earn-Code</td-->
+                                    <apex:repeat value="{!lstDt}" var="singleDt">
+                                        <td  style="min-width:30px;">
+                                            {!singleDt} 
+                                        </td>
+                                    </apex:repeat>
+                                </tr>
+                                <tr>
+                                     
+                                    <td  colspan="8" style="border-bottom:none;border-right: none;border-left: none;"><p>HOURS WORKED EACH DAY</p></td>
+                                </tr>
+                            </table>
+                        </td >
+                        <td style="border-top:none;text-align:center;font-size:10px; ">TOTAL HOURS</td >
+                        <td style="border-top:none;text-align:center; ">RATE OF PAY</td >
+                        <td style="border-top:none;text-align:center; ">GROSS AMOUNT EARNED</td >
+                        <td style="border-top:none;padding:0px; align-items: flex-end; justify-content: center;"><div class="wbreak" style="padding-top:10px;width:100%;text-align:center;">DEDUCTIONS</div> 
+                            <div style="display: flex;align-items: flex-end;  justify-content: center;  height: 70px; font-size:9px;  "><table  border="1" id="table1" style="border-collapse: collapse;padding:0px;">
+                                 <tr>
+                                    <td style="width:49px;border-bottom:none;">FICA</td>
+                                    <td style="width:62px;border-bottom:none;">FED  W/H TAX</td>
+                                    <td style="width:51px;border-bottom:none;">State &amp; Local WH Tax</td>
+                                    <td style="width:40px;border-bottom:none;">Union Deductions</td>
+                                    <td style="width:40px;border-bottom:none;">OTHER</td>
+                                    <td style="width:40px;border-bottom:none;">TOTAL DEDUCTIONS</td>
+                                    
+                                </tr></table></div>
+                        </td >
+                        <td style="border-top:none;border-right:none;">NET WAGES PAID FOR WEEK</td >
+                    </tr>
+                    
+                    
+                    <apex:variable var="dedcount" value="{!0}"/>
+                    
+                    
+                    
+                    
+                    <!-- tr1--- -->
+                    <apex:repeat value="{!paystubList}" var="pp">
+                        <apex:variable var="location" value="{!pp.BZP__Worker__r.HRMSUS__Street__c +','+ pp.BZP__Worker__r.HRMSUS__City2__c +','+pp.BZP__Worker__r.HRMSUS__State__c+','+pp.BZP__Worker__r.HRMSUS__Zip_Code__c+','+pp.BZP__Worker__r.HRMSUS__Country__c}"/>
+                        <apex:variable var="ficataxes" value="{!0}"/>
+                        <apex:variable var="fedwhtaxes" value="{!0}"/>
+                        <apex:variable var="sandloctaxes" value="{!0}"/>
+                        <apex:variable var="uniondeduction" value="{!0}"/>
+                        <apex:variable var="totaldeduction" value="{!0}"/>
+                        <apex:variable var="totalgrossamt" value="{!0}"/>
+                        <apex:variable var="totalhoursov" value="{!0}"/>
+                        <apex:variable var="totalgrossamtov" value="{!0}"/>
+                        <apex:variable var="totalhours" value="{!0}"/>
+                        <apex:variable var="othertax" value="{!0}"/> 
+                        
+                        <apex:variable var="sttotal" value="{!0}"/> 
+                         <apex:variable var="ottotal" value="{!0}"/>  
+                        <apex:variable var="otclass" value=""/> 
+                        <apex:variable var="stclass" value=""/> 
+                        <apex:variable var="otrate" value="{!If(pp.BZP__Worker__r.OT_Bill_Rate__c!=null ,pp.BZP__Worker__r.OT_Bill_Rate__c,0)}"/> 
+                        <apex:variable var="strate" value="{!If(pp.BZP__Worker__r.HRMSUS__Payrate__c!=null ,pp.BZP__Worker__r.HRMSUS__Payrate__c,0)}"/> 
+                        
+                        
+                        
+                        <tr>
+                            <td style="border-top:none;border-left:none;" >
+                                {!pp.BZP__Worker__r.Name}<br/>
+                                {!pp.BZP__Worker__r.HRMSUS__Personal_Email__c}, {!pp.BZP__Worker__r.HRMSUS__Mobile__c},<br/>
+                               {!pp.BZP__Worker__r.HRMSUS__S_S_Number__c}
+                                <!--{!location}-->
+                            </td>
+                            <td  style="text-align:center;">   
+                                <apex:outputText value="{!If(wbool==0,'S1','')}" />
+                                <apex:outputText value="{!If(wbool==1,'S0','')}" />
+                                <apex:variable var="wbool" value="{!if(wbool==0,1,if(wbool==1,0,0))}"   />
+                                
+                            </td>
+                            <td  style="text-align:center;">{!pp.BZP__Worker__r.BZP__Class_Code__c}</td>
+                            <td style="min-width:2px;"> 
+                            <table     style="  border:0px solid white; border-collapse: collapse;padding:0px;border:none;">
+                            <tr>
+                            <td style="  height:28.7px; white-space: nowrap; overflow-wrap: break-word;padding-left: 4px;padding-right: 4px;"> O</td>
+                            </tr>
+                            <tr>
+                            <td style="  height:28.7px; white-space: nowrap; overflow-wrap: break-word;border-top:1px solid black;padding-left: 4px;padding-right: 4px;"> S</td></tr>
+                            </table>
+                            
+                            </td>
+                            <td  style="padding:0px; text-align:center;font-size:9px;" colspan="4">
+                                <table   border="1"  id="table22" style="  border:1px solid #808080; border-collapse: collapse;padding:0px;border-right:none;">
+                                    <tr>
+                                         
+                                        <!--td style="min-width:42px; height:28.7px; white-space: nowrap; overflow-wrap: break-word;"> OT</td-->
+                                        <apex:repeat value="{!dates }" var="d">
+                                            
+                                            <td   style="min-width:39.4px;max-width:40px;text-align:center;height:29px;">   
+                                                <apex:repeat value="{!mdailyc[pp.Id] }" var="ear">
+                                                    <apex:inputText style="height:23px;width:32px;border:none;font-size:9px;" lang="{!pp.BZP__Worker__r.HRMSUS__Payrate__c}" alt="{!pp.BZP__Worker__r.OT_Bill_Rate__c}" title="{!pp.Id}" styleClass="dailyOT_"  onchange="updateElementsWithClass(this)" onfocus="this.oldvalue = this.value;" value="{!ear.HRMSUS__Overtime_Hours__c}" rendered="{!If( DAY(ear.HRMSUS__Timecard_Date__c) ==DAY(d) ,true,false)}">
+                                                        
+                                                    </apex:inputText> 
+                                                    <apex:variable var="ottotal" value="{!ottotal+ear.HRMSUS__Overtime_Hours__c}" rendered="{!If( DAY(ear.HRMSUS__Timecard_Date__c) ==DAY(d) ,true,false)}"/> 
+                                                    
+                                                    <apex:variable var="otclass" value="{!'dailyOT_'+pp.Id}" rendered="{!If( DAY(ear.HRMSUS__Timecard_Date__c) ==DAY(d) ,true,false)}"/>
+                                                </apex:repeat>
+                                            </td>
+                                        </apex:repeat>
+                                        <td class="{!otclass}" style="min-width:68px;">
+                                            
+                                            <apex:outputText value="{!If( ottotal !=null ,ottotal,0)}"  >
+                                                
+                                            </apex:outputText>
+                                        </td>
+                                        <td style="min-width:60px; ">
+                                            <apex:outputText value="{!otrate}"  >
+                                                
+                                            </apex:outputText>
+                                        </td>
+                                        <td  style="min-width:108px; border:none;" >
+                                             
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr  >
+                                        
+                                        <!--td style="min-width:42px;height:28.7px; white-space: nowrap; overflow-wrap: break-word;border-top:none;border-bottom:none;"> ST</td-->
+                                        <apex:repeat value="{!dates }" var="d"> 
+                                            
+                                            <td   style=" min-width:39.4px;max-width:40px;border-top:none;border-bottom:none;height:29px;">   
+                                                <apex:repeat value="{!mdailyc[pp.Id] }" var="ear"> 
+                                                    
+                                                    <apex:inputText style="height:23px;width:32px;border:none;font-size:9px;" lang="{!pp.BZP__Worker__r.HRMSUS__Payrate__c}" alt="{!pp.BZP__Worker__r.OT_Bill_Rate__c}" title="{!pp.Id}"  styleClass="{!'dailyST_'}" label="daily" onchange="updateElementsWithClass(this)"  onfocus="this.oldvalue = this.value;" value="{!ear.rightpm__StraightTime__c}"   rendered="{!If( DAY(ear.HRMSUS__Timecard_Date__c) ==DAY(d)  ,true,false)}">
+                                                        
+                                                    </apex:inputText>
+                                                    <apex:variable var="sttotal" value="{!sttotal+ear.rightpm__StraightTime__c}" rendered="{!If( DAY(ear.HRMSUS__Timecard_Date__c) ==DAY(d) ,true,false)}"/>
+                                                    
+                                                    <apex:variable var="stclass" value="{!'dailyST_'+pp.Id}" rendered="{!If( DAY(ear.HRMSUS__Timecard_Date__c) ==DAY(d) ,true,false)}"/> 
+                                                    
+                                                </apex:repeat>
+                                            </td>
+                                        </apex:repeat>
+                                        <td class="{!stclass}" style="min-width:68px;border-top:none;border-bottom:none;">
+                                            <apex:outputText value="{!If(sttotal!=null ,sttotal,0)}"  >
+                                                
+                                            </apex:outputText>
+                                        </td>
+                                        <td   style="min-width:60px;border-top:none;border-bottom:none; ">
+                                            
+                                            <apex:outputText value="{!strate}"  >
+                                                
+                                            </apex:outputText>
+                                            
+                                            
+                                        </td>
+                                        <td  class="{!pp.Id}" style="min-width:108px;border:none;" >
+                                             
+                                            <apex:outputText value="{0, Number, Currency}"> 
+                                            <apex:param value="{!if(sttotal!=null && strate!=null,if(ottotal!=null && otrate!=null,sttotal*strate+ottotal*otrate,sttotal*strate),0)}" /> 
+                                            </apex:outputText>
+                                            
+                                            
+                                            
+                                        </td>
+                                    </tr>
+                                    
+                                    
+                                    
+                                </table> 
+                            </td>
+                            
+                            
+                            <td  style="border-top:none;padding:0px; text-align:center;font-size:9px; ">
+                                <table  border="1" id="table2" style="border-collapse: collapse;padding:0px;border-bottom:none;border-top:none;border-right:none;border-left:none;">
+                                    
+                                    <tr style="">
+                                        <td style="min-width:32px;height:59px; "> 
+                                            
+                                            <apex:repeat value="{!pp.BZP__PaystubTaxes__r }" var="tax" >
+                                                <apex:variable var="ficataxes" value="{!ficataxes+tax.BZP__TaxAmount__c}" rendered="{!If(OR(tax.Name =='EE MED',tax.Name =='ER MED',tax.Name =='ER SOC SEC',tax.Name =='EE SOC SEC'),true,false)}"/>
+                                                <apex:variable var="fedwhtaxes" value="{!fedwhtaxes+tax.BZP__TaxAmount__c}" rendered="{!If( tax.Name =='FED WH' ,true,false)}"/>
+                                                <apex:variable var="sandloctaxes" value="{!sandloctaxes+tax.BZP__TaxAmount__c}" rendered="{!If( OR(tax.Name =='ER FUTA',tax.Name =='TX ER SUI',tax.Name =='AZ WHT',tax.Name =='TX ER EMPLOYMENT TRAINING INVEST ASSMNT') ,true,false)}"/> 
+                                                <apex:variable var="othertax" value="{!othertax+tax.BZP__TaxAmount__c}" rendered="{!If(OR(tax.Name !='ER FUTA',tax.Name !='TX ER SUI',tax.Name !='AZ WHT',tax.Name !='TX ER EMPLOYMENT TRAINING INVEST ASSMNT',tax.Name !='FED WH',tax.Name !='EE MED',tax.Name !='ER MED',tax.Name !='ER SOC SEC',tax.Name !='EE SOC SEC'),true,false)}"/>
+                                            </apex:repeat> 
+                                            <apex:outputText value="{0, Number, Currency}"> <apex:param value="{!ficataxes}" /> </apex:outputText>
+                                        </td>
+                                        <td style="min-width:32px;"><apex:outputText value="{0, Number, Currency}"> <apex:param value="{!fedwhtaxes}" /> </apex:outputText> </td>
+                                        <td style="min-width:32px;"><apex:outputText value="{0, Number, Currency}"> <apex:param value="{!sandloctaxes}" /> </apex:outputText></td>
+                                        <td style="width:59px;">
+                                            <apex:repeat value="{!pp.BZP__Deductions__r}" var="ded" >
+                                                <apex:variable var="uniondeduction" value="{!uniondeduction+ded.BZP__Amount__c}"/>
+                                            </apex:repeat>
+                                            <apex:outputText value="{0, Number, Currency}"> <apex:param value="{!uniondeduction}" /> </apex:outputText>
+                                        </td>
+                                        <td style="width:40px;"><apex:outputText value="{0, Number, Currency}" ><apex:param value="{!0}" /></apex:outputText> </td>
+                                        <td style="width:80px;">
+                                            <apex:variable var="totaldeduction" value="{!totaldeduction+ficataxes+fedwhtaxes+sandloctaxes+uniondeduction}"/>
+                                            <apex:outputText value="{0, Number, Currency}"> <apex:param value="{!totaldeduction}" /> </apex:outputText>
+                                        </td>
+                                        
+                                    </tr></table>
+                            </td>
+                            <td style="border-top:none;border-right:none;">
+                                
+                                <apex:outputText value="{0, Number, Currency}"> <apex:param value="{!pp.BZP__NetPay__c}" /> </apex:outputText><br/><apex:outputText value="Race :{!pp.BZP__Worker__r.HRMSUS__State__c}" /> <br/><apex:outputText value="Gender:{!pp.BZP__Worker__r.HRMSUS__Gender__c}" />
+                            </td>
+                        </tr>
+                    </apex:repeat>
+                    <!-- tr2--- -->
+                    
+                    <!-- tr3--- -->
+                    
+                    
+                    <!-- tr4--- -->
+                    
+                    
+                    <!-- tr5--- -->
+                    
+                    <!-- tr6--- -->
+                    
+                    <!-- tr7--- -->
+                    
+                    <!-- tr8--- -->
+                    
+                    
+                </table>
+            </div>
+            <div style="font-size:11px;">
+                While completion of Form WH-347 is optional, it is mandatory for covered contractors and subcontractors performing work on Federally financed or assisted construction contracts to respond to the information collection contained in 29 C.F.R. §§ 3.3, 5.5(a). The Copeland Act
+                (40 U.S.C. § 3145) contractors and subcontractors performing work on Federally financed or assisted construction contracts to "furnish weekly a statement with respect to the wages paid each employee during the preceding week." U.S. Department of Labor (DOL) regulations at
+                29 C.F.R. § 5.5(a)(3)(ii) require contractors to submit weekly a copy of all payrolls to the Federal agency contracting for or financing the construction project, accompanied by a signed "Statement of Compliance" indicating that the payrolls are correct and complete and that each laborer 
+            </div><br/> 
+            <div style="font-size:12px;text-align:center;"> <b>Public Burden Statement</b> </div><br/>
+            <div style="font-size:11px; ">
+                We estimate that is will take an average of 55 minutes to complete this collection, including time for reviewing instructions, searching existing data sources, gathering and maintaining the data needed, and completing and reviewing the collection of information. If you have
+                any comments regarding these estimates or any other aspect of this collection, including suggestions for reducing this burden, send them to the Administrator, Wage and Hour Division, U.S. Department of Labor, Room S3502, 200 Constitution Avenue, N.W.
+                Washington, D.C. 20210
+            </div>
+            <div class=" " align="center" style="font-size:10px;">
+                <hr/>
+                (over)
+            </div>
+            <hr style="background-color:#444444;width:100%;padding:4px;"> </hr>
+            <!-- 2nd page -->
+            
+    <table width="100%" style="font-size:11px;">
+    <tr  style="padding-right:20px;">
+        <td style="width:50%;">Date :<input type="date" /> </td> 
+        <td style="width:50%;">(b) WHERE FRINGE BENEFITS ARE PAID IN CASH</td> 
+    </tr>
+    <tr  style="padding-right:20px;">
+        <td style="width:50%;">
+                <table width="100%" style="padding-right:10px;">
+                    <tr >
+                    <td style="width:50%;border-bottom:1px solid black;"><input style="border:none; " type="text" /> </td> 
+                    <td style="width:50%;border-bottom:1px solid black;padding-right:10px;"><input style="border:none; " type="text" /> </td> 
+                    </tr>
+                    <tr>
+                        <td style="width:50%;text-align:center;">(Name of Signatory Party) </td> 
+                        <td style="width:50%;text-align:center;">(Title)</td> 
+                    </tr>
+                    <tr><td colspan="2">do hereby state: </td></tr>
+                    
+                </table>
+         </td> 
+        <td style="width:50%;">
+            <table width="100%">
+                    <tr>
+                    <td style="width:10%;border:none;text-align:right;"><input style="position:relative;top:-15px;" type="checkbox" /> </td> 
+                    <td style="width:90%;border:none;">- Each laborer or mechanic listed in the above referenced payroll has been paid,
+as indicated on the payroll, an amount not less than the sum of the applicable
+basic hourly wage rate plus the amount of the required fringe benefits as listed
+in the contract, except as noted in section 4(c) below. </td> 
+                    </tr>
+                     
+                </table>
+        </td> 
+    </tr>
+    <tr   >
+        <td style="width:50%;">(1) That I pay or supervise the payment of the persons employed by <br/> 
+        <input style="border:none;border-bottom:1px solid black;width:560px; "/>on the
+    <div  style=" text-align:center;width:560px; ">(Contractor or Subcontractor)</div>    
+    </td> 
+        <td style="width:50%;">(c) EXCEPTIONS</td> 
+    </tr>
+    <tr   >
+        <td style="width:50%;vertical-align: top;"> 
+     <input style="border:none;border-bottom:1px solid black;width:260px; "/> ;that during the payroll period commencing on the 
+                            
+          <div  style=" text-align:center;width:360px; ">(Building or Work)</div><br/>
+          <input style="width:40px;border:none;border-bottom:1px solid black;"/>day of <input style="width:80px;border:none;border-bottom:1px solid black;"/>,<input style="width:40px;border:none;border-bottom:1px solid black;"/>,and ending the<input style="width:40px;border:none;border-bottom:1px solid black;"/>day of <input style="width:70px;border:none;border-bottom:1px solid black;"/>,<input style="width:40px;border:none;border-bottom:1px solid black;"/>,<br/>
+          all persons employed on said project have been paid the full weekly wages earned, that no rebates have
+been or will be made either directly or indirectly to or on behalf of said <br/>
+        <input style="width:540px;border:none;border-bottom:1px solid black;"/>from the full
+        <div  style=" text-align:center;width:460px; ">(Contractor or Subcontractor)</div><br/>
+        weekly wages earned by any person and that no deductions have been made either directly or indirectly
+from the full wages earned by any person, other than permissible deductions as defined in Regulations, Part
+3 (29 C.F.R. Subtitle A), issued by the Secretary of Labor under the Copeland Act, as amended (48 Stat. 948,
+63 Stat. 108, 72 Stat. 967; 76 Stat. 357; 40 U.S.C. § 3145), and described below: <br/>
+<input style="width:540px;border:none;border-bottom:1px solid black;"/>
+<input style="width:540px;border:none;border-bottom:1px solid black;"/>
+<input style="width:540px;border:none;border-bottom:1px solid black;"/>
+<input style="width:540px;border:none;border-bottom:1px solid black;"/>
+
+        </td> 
+        <td style="width:50%;"> 
+        
+                                <table border="1px solid black;" class="mtab" width="100%" height="100%" style=" border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th>EXCEPTION (CRAFT)</th>
+                                    <th>EXPLANATION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td> <input style="border:none; width:250px;"/></td>
+                                    <td><input style="border:none; width:250px;"/></td>
+                                </tr>
+                                <tr>
+                                   <td> <input style="border:none; width:250px;"/></td>
+                                    <td><input style="border:none; width:250px;"/></td>
+                                </tr>
+                                <tr>
+                                   <td> <input style="border:none; width:250px;"/></td>
+                                    <td><input style="border:none; width:250px;"/></td>
+                                </tr>
+                                <tr>
+                                    <td> <input style="border:none; width:250px;"/></td>
+                                    <td><input style="border:none; width:250px;"/></td>
+                                </tr>
+                                <tr>
+                                    <td> <input style="border:none; width:250px;"/></td>
+                                    <td><input style="border:none; width:250px;"/></td>
+                                </tr>
+                                <tr>
+                                    <td> <input style="border:none; width:250px;"/></td>
+                                    <td><input style="border:none; width:250px;"/></td>
+                                </tr>
+                                <tr>
+                                    <td> <input style="border:none; width:250px;"/></td>
+                                    <td><input style="border:none; width:250px;"/></td>
+                                </tr>
+                                <tr>
+                                   <td> <input style="border:none; width:250px;"/></td>
+                                    <td><input style="border:none; width:250px;"/></td>
+                                </tr>
+                            </tbody>
+                            </table>
+        </td> 
+    </tr>
+    <tr>
+    <td style="vertical-align: top;">
+        (2) That any payrolls otherwise under this contract required to be submitted for the above period are
+    correct and complete; that the wage rates for laborers or mechanics contained therein are not less than the
+    applicable wage rates contained in any wage determination incorporated into the contract; that the classifications
+    set forth therein for each laborer or mechanic conform with the work he performed. <br/><br/>
+    
+    (3) That any apprentices employed in the above period are duly registered in a bona fide apprenticeship
+program registered with a State apprenticeship agency recognized by the Bureau of Apprenticeship and
+Training, United States Department of Labor, or if no such recognized agency exists in a State, are registered
+with the Bureau of Apprenticeship and Training, United States Department of Labor. <br/><br/>
+(4) That:<br/>
+<div style="padding-left:22px;">(a) WWHERE FRINGE BENEFITS ARE PAID TO APPROVED PLANS, FUNDS, OR PROGRAMS</div>
+<div style="padding-left:28px;"><input type="checkbox"  /> </div>
+<div style="padding-left:38px;">- in addition to the basic hourly wage rates paid to each laborer or mechanic listed in
+the above referenced payroll, payments of fringe benefits as listed in the contract
+have been or will be made to appropriate programs for the benefit of such employees,
+except as noted in section 4(c) below. </div>
+
+    </td>
+     <td style="vertical-align: top;"> 
+     REMARKS: 
+     <input type="textarea" style="height:140px;width:610px;vertical-align: top;"/>
+     <table class="mtab">
+    <tr>
+        <td class="table-cell" style="width: 70%;">NAME AND TITLE <br/> <input style="border:none; width:250px;"/></td>
+        <td class="table-header" style="width: 30%;">SIGNATURE <br/> <input style="border:none; width:250px;"/></td>
+    </tr>
+    <tr>
+        <td  colspan="2">
+            THE WILLFUL FALSIFICATION OF ANY OF THE ABOVE STATEMENTS MAY SUBJECT THE CONTRACTOR OR SUBCONTRACTOR TO CIVIL OR CRIMINAL PROSECUTION. 
+            SEE SECTION 1001 OF TITLE 18 AND SECTION 3729 OF TITLE 31 OF THE UNITED STATES CODE.
+        </td>
+    </tr>
+</table>
+     </td>
+    </tr>
+    </table>
+        </apex:form>
+    </div>
+    
+    </div>
+    <div class="no-print">
+        <button class="print-button" onclick="window.print()">Print Page</button>
+     </div>
+    <script>
+    function updateElementsWithClass(eventTarget) {
+        // Get the full class name of the element that triggered the event
+        var strate=eventTarget.lang;
+        var otrate=eventTarget.alt;
+        if(eventTarget.value==''){
+            eventTarget.value=0;
+        }
+        var src=eventTarget.oldvalue;
+        src=src!=''?src:0
+        var className = eventTarget.className;
+        var classtitle = eventTarget.title;
+        console.log(className);
+        
+        // Use a CSS selector to find all elements that contain this class name
+        var elements = document.querySelectorAll('[class*="' + className +classtitle+ '"]');
+        
+        // Update the innerHTML of each matching element
+        
+        for (var i = 0; i < elements.length; i++) {
+            if(elements[i].innerHTML=="")
+            {
+                elements[i].innerHTML=0 ;        
+            }
+            var myval = elements[i].innerHTML !== undefined ? elements[i].innerHTML : 0;
+            myval=parseInt(myval)-src;
+            elements[i].innerHTML = myval+parseFloat(eventTarget.value);
+        }
+        
+        var otvalue;
+        var stvalue;
+        var otvalueelements = document.querySelectorAll('[class*="' + 'dailyOT_' +classtitle+ '"]');
+        var stvalueelements = document.querySelectorAll('[class*="' + 'dailyST_' +classtitle+ '"]');
+        for (var i = 0; i < otvalueelements.length; i++) {
+            if(otvalueelements[i].innerHTML=="")
+            {
+                otvalueelements[i].innerHTML=0 ;        
+            }
+            var myval = otvalueelements[i].innerHTML !== undefined ? otvalueelements[i].innerHTML : 0;
+            otvalue = parseFloat(myval);
+        }
+        for (var i = 0; i < stvalueelements.length; i++) {
+            if(stvalueelements[i].innerHTML=="")
+            {
+                stvalueelements[i].innerHTML=0 ;        
+            }
+            var myval = stvalueelements[i].innerHTML !== undefined ? stvalueelements[i].innerHTML : 0;
+            stvalue = parseFloat(myval) ;
+        }
+        
+        var pti = document.querySelectorAll('[class="' +classtitle+ '"]');
+        for (var i = 0; i < pti.length; i++) {
+            if(pti[i].innerHTML=="")
+            {
+                pti[i].innerHTML=0 ;        
+            }
+            var myval = pti[i].innerHTML !== undefined ? pti[i].innerHTML : 0;
+           let muval = parseFloat(otrate)*parseFloat(otvalue)+parseFloat(strate)*parseFloat(stvalue);
+            pti[i].innerHTML='$'+muval;
+        } 
+        
+        
+    }
+    
+    </script>
+    <script>
+        function syncColumnWidths() {
+            const table1 = document.getElementById('table1');
+            const table2 = document.getElementById('table2');
+
+            const table1Cells = table1.querySelectorAll('tbody tr:first-child td');
+            const table2Headers = table2.querySelectorAll('thead th');
+
+            // Ensure both tables have the same number of columns
+            if (table1Cells.length !== table2Headers.length) {
+                console.error('Column count mismatch between tables.');
+                return;
+            }
+
+            // Adjust the width of the second table's headers to match the first table's cells
+            table1Cells.forEach((cell, index) => {
+                const width = cell.offsetWidth; // Get the width of the <td>
+                table2Headers[index].style.width = `${width}px`; // Apply the width to the corresponding <th>
+            });
+        }
+
+        // Run synchronization after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            syncColumnWidths();
+            // Re-sync widths on window resize
+            window.addEventListener('resize', syncColumnWidths);
+        });
+        
+        document.addEventListener('keydown', function(event) {
+            // Check for Ctrl+P (key "P" is 80 in keyCode)
+            if (event.ctrlKey && event.key === 'p') {
+                event.preventDefault(); // Prevent the default browser behavior
+                window.print(); // Trigger the print dialog
+            }
+        });
+    </script>
+     
+</apex:page>

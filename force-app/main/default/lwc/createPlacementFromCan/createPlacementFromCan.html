@@ -1,16 +1,15 @@
+<!--
+@description       : 
+@author            : Ali
+@group             : 
+@last modified on  : 12-18-2024
+@last modified by  : Ali
+-->
 <template>
     <lightning-quick-action-panel header="">
         <div>     <!--section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open  "-->
      <div style="width: 100%; "> 
-        <!--div class="slds-modal__container mycontainer"-->
-            <!-- Custom Header -->
-            <!--header class="slds-modal__header custom-modal-header" style="background:#08475b;color:white;">
-                <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close" onclick={handleClose}></lightning-button-icon-->
-                <!--h2  class="slds-text-heading_medium">{headerText}</h2-->
-            <!--/header-->
-
-            <!-- Modal Body Content -->
-            <!--div class="slds-modal__content slds-p-around_medium"-->
+        
                 <lightning-card title="Select Candidate " icon-name="standard:buyer_group_qualifier">
                     <!-- Search Fields -->
                      <div class="slds-grid slds-wrap slds-gutters" style="padding-right:5px;padding-left:5px;">
@@ -129,10 +128,7 @@
                                           <lightning-input class="myinputwidth" label="Name" placeholder=" Name.." onchange={handleNameChange}></lightning-input>
                                
                             </div>
-                            <div class="slds-col ">
-                                            <lightning-input class="myinputwidth" label="Position" placeholder="Position .." value={position} onchange={handlePositionChange}></lightning-input>
-                                 
-                              </div>
+                             
                             <div class="slds-col ">
                                           <!--lightning-input class="myinputwidth" label="State" placeholder="State Name.." value={searchAddress} onchange={handleAddressChange}></lightning-input-->
                                           <lightning-combobox 
@@ -176,14 +172,14 @@
                     </div>
             
                     <!-- Contact Results Table -->
-                    <template if:true={applications.length}>
+                    <template if:true={candidates.length}>
                         <table class="slds-table slds-table_bordered slds-table_cell-buffer">
                             <thead>
                                 <tr>
                                     <th>  </th>
-																		<th>Application</th>
+																		<th>Candidate</th>
                                     <th>Name</th>
-                                    <th>Position</th>
+                                    <!--th>Position</th-->
                                     <th>Overall Stage</th> 
                                     <th>State</th>
                                     <!--th>Postal Code</th-->
@@ -202,12 +198,11 @@
                                                                                 
                                                                                 </td>
                                         <td>{app.HRMSUS__Candidate_Name__c}</td>
-                                        <td>{app.rightpm__Position_Title_New__c}</td>
-                                        <td>{app.HRMSUS__Overall_Stage__c}</td>
-                                        <td title={app.HRMSUS__Candidate1__r.HRMSUS__Zip_Postal_Code__c}>
-                                            {app.HRMSUS__Candidate1__r.HRMSUS__State__c}</td>
-                                        <!--td>{app.HRMSUS__Candidate1__r.HRMSUS__State__c}</td-->
-                                        <!--td>{app.MailingPostalCode}</td-->
+                                        <!--td>{app.rightpm__Position_Title_New__c}</td-->
+                                        <td>{app.rightpm__Placement_Status__c}</td>
+                                        <td title={app.HRMSUS__Zip_Postal_Code__c}>
+                                            {app.HRMSUS__State__c}</td>
+                                        
                                     </tr>
                                 </template></template>
                                 
@@ -222,19 +217,9 @@
                         <button class="slds-button slds-button_neutral" onclick={nextPage} disabled={isLastPage}>Next</button>
                     </div>
             
-                    <!-- Button to create placement records -->
-                         <!--lightning-button label="Create Placements" onclick={createPlacements} class="slds-m-top_medium"></lightning-button-->
+                     
                  </lightning-card>
-            <!--/div-->
-
-            <!-- Custom Footer -->
-            <!--footer class="slds-modal__footer custom-modal-footer" style="text-align: center;">
-                <lightning-button label="Cancel" onclick={handleClose}></lightning-button>
-                <span style="padding:10px;"></span>
-                <lightning-button label="Create Placements" onclick={createPlacements} class="slds-m-top_medium"></lightning-button>
-            </footer-->
-        <!--/div-->
-    <!--/section-->
+             
     
     </div>
     
@@ -243,9 +228,7 @@
             <div class="slds-modal__container">
                 <!-- Modal/Popup Header -->
                 <header class="slds-modal__header" style="background:#2d5e7d;color:white;">
-                    <!--lightning-button-icon icon-name="utility:close"
-                                           alternative-text="Close"
-                                           onclick={closeModal}></lightning-button-icon-->
+                     
                     <h2 class="slds-text-heading_medium">{header}</h2>
                 </header>
     

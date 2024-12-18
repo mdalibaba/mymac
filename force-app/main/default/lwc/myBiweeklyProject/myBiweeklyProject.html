@@ -1,0 +1,38 @@
+<template>
+<lightning-quick-action-panel>
+<lightning-card icon-name="standard:account" variant="base">
+    <div slot="title">Project Daily Time Cards</div>
+    
+    <div slot="footer">
+
+    </div>
+    <div>
+    <!--Select payperiod from  payPeriods list -->
+    <lightning-select name="PayPeriod" label="PayPeriod" 
+                        onchange={handlepayperiodChange}
+                        value={ppid} data-id="PayPeriod"
+                        options={ppids} > 
+    </lightning-select>
+    <!--table to show records-->
+    <div class="slds-grid slds-wrap slds-gutters slds-p-around_x-small">
+        <table class="slds">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="slds-text-align_center slds-cell-wrap" scope="col"> </th>
+                    <template for:each={dateList} for:item="day" > 
+                        <th class="slds-text-align_center slds-cell-wrap" key={day} scope="col">
+                            {day}
+                        </th>
+                    </template>
+                    </tr>
+                    </thead>
+
+        </table>
+    </div>
+        
+
+    
+    </div>
+</lightning-card>
+</lightning-quick-action-panel>
+</template>
