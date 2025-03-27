@@ -341,6 +341,8 @@ const longitude1 = element.rightpm__GeoLocations__Longitude__s;
         }
     });
     this.geodata=myarr;
+    this.candidates =myarr;
+    this.currentPage = 1;
     this.updatePaginatedData();
         return false;
     }, 1000);
@@ -349,6 +351,7 @@ const longitude1 = element.rightpm__GeoLocations__Longitude__s;
     searchCandidates({ name: this.searchName, address: this.searchAddress ,zipcode:this.zipcode})
         .then(result => {
             this.candidates = result;
+            this.currentPage = 1;
             this.selectedApplications.clear(); // Clear selections after search
             this.updatePaginatedData();
         })

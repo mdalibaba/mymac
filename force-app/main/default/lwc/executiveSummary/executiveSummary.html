@@ -92,54 +92,111 @@ class="full-page-panel custom-panel"
                                                             <td class="tdcl" scope="row" width="10%">
                                                                 <div style="font-size:12px;" title="Employee">{item.Name}</div>
                                                             </td>
-                                                            <template for:each={item.Timedata} for:item="prj">
-                                                                        <template  lwc:if ={prj.Sun} for:each={prj.Sun} for:item="p"> 
+                                                            <!--Sunday Code-->
+                                                            <template if:true={isSunday} > 
+                                                                <template for:each={item.Timedata} for:item="prj">
+                                                                    <template  lwc:if ={prj.Sun} for:each={prj.Sun} for:item="p"> 
+                                                                <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                        <div class="myth " title="Straight Time" ><lightning-input   min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number" ></lightning-input></div>
+                                                                </td>
+                                                                
+                                                                    </template>
+                                                                <template lwc:elseif ={prj.Mon} for:each={prj.Mon} for:item="p"> 
                                                                     <td class="tdcl" scope="row"  key={p} width="10%">
-                                                                            <div class="myth " title="Straight Time" ><lightning-input   min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number" ></lightning-input></div>
-                                                                    </td>
-                                                                    
+                                                                        <div  class="myth" title="Straight Time"><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                </td>
                                                                         </template>
-                                                                    <template lwc:elseif ={prj.Mon} for:each={prj.Mon} for:item="p"> 
+                                                                    <template lwc:elseif ={prj.Tue} for:each={prj.Tue} for:item="p" > 
                                                                         <td class="tdcl" scope="row"  key={p} width="10%">
-                                                                            <div  class="myth" title="Straight Time"><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
-                                                                    </td>
-                                                                            </template>
-                                                                        <template lwc:elseif ={prj.Tue} for:each={prj.Tue} for:item="p" > 
+                                                                            <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                        </td>
+                                                                        </template>
+                                                                        <template lwc:elseif ={prj.Wed} for:each={prj.Wed} for:item="p"> 
                                                                             <td class="tdcl" scope="row"  key={p} width="10%">
-                                                                                <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
-                                                                            </td>
+                                                                                <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"    onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                        </td>
+                                                                                
                                                                             </template>
-                                                                            <template lwc:elseif ={prj.Wed} for:each={prj.Wed} for:item="p"> 
+                                                                            <template lwc:elseif ={prj.Thu} for:each={prj.Thu} for:item="p"> 
                                                                                 <td class="tdcl" scope="row"  key={p} width="10%">
-                                                                                    <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"    onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                                    <div class="myth" title="Straight Time"><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
                                                                             </td>
-                                                                                    
+                                                                                
+                                                                        
                                                                                 </template>
-                                                                                <template lwc:elseif ={prj.Thu} for:each={prj.Thu} for:item="p"> 
+                                                                                <template lwc:elseif ={prj.Fri} for:each={prj.Fri} for:item="p"> 
                                                                                     <td class="tdcl" scope="row"  key={p} width="10%">
-                                                                                        <div class="myth" title="Straight Time"><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                                        <div class="myth" title="Straight Time" ><lightning-input  min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
                                                                                 </td>
-                                                                                    
-                                                                            
+                                                                                        
+                                                                                
                                                                                     </template>
-                                                                                    <template lwc:elseif ={prj.Fri} for:each={prj.Fri} for:item="p"> 
+                                                                                    <template lwc:elseif ={prj.Sat} for:each={prj.Sat} for:item="p"> 
                                                                                         <td class="tdcl" scope="row"  key={p} width="10%">
-                                                                                            <div class="myth" title="Straight Time" ><lightning-input  min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                                            <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
                                                                                     </td>
-                                                                                            
-                                                                                    
+                                                                                        
+                                                                                
                                                                                         </template>
-                                                                                        <template lwc:elseif ={prj.Sat} for:each={prj.Sat} for:item="p"> 
-                                                                                            <td class="tdcl" scope="row"  key={p} width="10%">
-                                                                                                <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
-                                                                                        </td>
-                                                                                            
-                                                                                    
-                                                                                            </template>
-                                                                                            
-                                                                                            
-                                                                    
+                                                                                        
+                                                                                        
+                                                                
+                                                        </template>
                                                             </template>
+                                                            <!--Monday Code-->
+                                                            <template if:false={isSunday} > 
+                                                                <template for:each={item.Timedata} for:item="prj">
+                                                                    
+                                                                <template  lwc:if  ={prj.Mon} for:each={prj.Mon} for:item="p"> 
+                                                                    <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                        <div  class="myth" title="Straight Time"><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                </td>
+                                                                        </template>
+                                                                        
+                                                                    <template lwc:elseif ={prj.Tue} for:each={prj.Tue} for:item="p" > 
+                                                                        <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                            <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                        </td>
+                                                                        </template>
+                                                                        <template lwc:elseif ={prj.Wed} for:each={prj.Wed} for:item="p"> 
+                                                                            <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"    onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                        </td>
+                                                                                
+                                                                            </template>
+                                                                            <template lwc:elseif ={prj.Thu} for:each={prj.Thu} for:item="p"> 
+                                                                                <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                    <div class="myth" title="Straight Time"><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                            </td>
+                                                                                
+                                                                        
+                                                                                </template>
+                                                                                <template lwc:elseif ={prj.Fri} for:each={prj.Fri} for:item="p"> 
+                                                                                    <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                        <div class="myth" title="Straight Time" ><lightning-input  min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                                </td>
+                                                                                        
+                                                                                
+                                                                                    </template>
+                                                                                    <template lwc:elseif ={prj.Sat} for:each={prj.Sat} for:item="p"> 
+                                                                                        <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                            <div class="myth" title="Straight Time" ><lightning-input min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number"></lightning-input></div>
+                                                                                    </td>
+                                                                                        
+                                                                                
+                                                                                        </template>
+                                                                                        <template  lwc:elseif ={prj.Sun} for:each={prj.Sun} for:item="p"> 
+                                                                                            <td class="tdcl" scope="row"  key={p} width="10%">
+                                                                                                    <div class="myth " title="Straight Time" ><lightning-input   min="0" max="24" max-length="5" data-id={p.parentId} step=".01"   onchange={handleDayChange} name="Straight Time" value={p.rightpm__StraightTime__c} type="number" ></lightning-input></div>
+                                                                                            </td>
+                                                                                            
+                                                                                                </template>
+                                                                                        
+                                                                                        
+                                                                
+                                                        </template>
+                                                            </template>
+                                                             
                                                                 
                                                                 <td class="tdcl" scope="row"   >
                                                                     <div class="myth" title="Straight Time Total" > {item.STTotal}  </div>

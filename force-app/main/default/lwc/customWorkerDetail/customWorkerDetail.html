@@ -1,0 +1,61 @@
+<template>
+    <lightning-card title="My Workers">
+        <div class="slds-grid" style="padding:10px;">
+            <!-- Worker List -->
+            <!--div class="slds-col slds-size_1-of-3">
+                <template for:each={workers} for:item="worker">
+                    <div key={worker.Id} class="slds-box slds-m-around_x-small"
+                        data-id={worker.Id} onclick={handleWorkerSelect}>
+                        {worker.Name}
+                    </div>
+                </template>
+            </div-->
+            
+            <!-- Worker Record Detail (Like Record Page) -->
+            <div class="slds-col slds-size_2-of-3">
+                <template if:true={selectedWorkerId}>
+                    <lightning-record-form
+                        record-id={selectedWorkerId}
+                        object-api-name="HRMSUS__Person__c"
+                        layout-type="Compact"
+                        mode="view">
+                    </lightning-record-form>
+                </template>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+                 
+                <article class="slds-card">
+                    <div class="slds-grid slds-einstein-header slds-card__header">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-size_3-of-4 slds-medium-size_2-of-3">
+                    <div class="slds-media__body">
+                    <h2 class="slds-truncate" title="Einstein (10+)">
+                    <a href="#" class="slds-card__header-link" title="Einstein (10+)">
+                    <span class="slds-text-heading_small">Related List</span>
+                    </a>
+                    </h2>
+                    </div>
+                    </div>
+                    <div class="slds-einstein-header__figure slds-size_1-of-4 slds-medium-size_1-of-3"></div>
+                    </header>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <template lwc:if={records}>
+                            <div class="slds-m-around_medium">
+                              <template for:each={records} for:item="rec">
+                                <p key={rec.fields.Id.value}>{rec.fields.Name.value}</p>
+                              </template>
+                            </div>
+                          </template>
+                    </div>
+                    <footer class="slds-card__footer">
+                    <a class="slds-card__footer-action" href="#"> 
+                    <span class="slds-assistive-text">Einstein Recommendations</span>
+                    </a>
+                    </footer>
+                    </article>
+
+            </div>
+        </div>
+    </lightning-card>
+</template>

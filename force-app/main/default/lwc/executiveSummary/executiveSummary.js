@@ -10,6 +10,7 @@ import { CurrentPageReference } from 'lightning/navigation';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { NavigationMixin } from 'lightning/navigation';
 import Name from '@salesforce/schema/Account.Name';
+import GetProject from '@salesforce/apex/ProjectWeeklySummaryApex.getProject';
 
 
 let i=0;
@@ -31,6 +32,8 @@ export default class ExecutiveSummary extends NavigationMixin(LightningElement) 
 		@track weekstartD = '';
 		@track weekend = '';
 		@track finalDTArray = [];
+		@track myproject;
+		@track isSunday;
 		@api recordId;
 		payperiodId;
 		dayslist=[];
@@ -51,9 +54,10 @@ export default class ExecutiveSummary extends NavigationMixin(LightningElement) 
 				setTimeout(() => {
 
 						if(this.recordId ==undefined){
-								this.recordId=this.currentPageReference.state.c__recordId;
+								this.recordId=`${this.currentPageReference.state.c__recordId}`;
 
 						}
+						 
 						console.log(`c__myParam = ${this.currentPageReference.state.c__recordId}`); 
 
 				}, 2000);
@@ -63,6 +67,24 @@ export default class ExecutiveSummary extends NavigationMixin(LightningElement) 
 
 
 
+		}
+		@wire(GetProject,{ recdId: '$recordId' })
+		wiredproject({ error, data }) {
+				if (data) {
+						//create array with elements which has been retrieved controller
+						//here value will be Id and label of combobox will be Name
+						       
+						this.error = undefined;
+						//this.ppdlist = data;
+						this.myproject = data;
+						if(data.rightpm__Week_Start_Day__c=='Sunday'){
+							this.isSunday=true;
+						}else{
+							this.isSunday=false;
+						}
+				} else if (error) {
+						this.error = error;
+ 				}
 		}
 		@wire(GetPayperiod,{ recdId: '$recordId' })
 		wiredUserRoles({ error, data }) {
@@ -99,7 +121,7 @@ export default class ExecutiveSummary extends NavigationMixin(LightningElement) 
 				console.log('ppdlist' + this.ppdlist);
 				let j=0;
 				
-				getWeekDaysWithLabels({ ppid:this.chosenValue})
+				getWeekDaysWithLabels({ ppid:this.chosenValue,recId:this.recordId})
 								.then(data=>{
 								this.dayslist = data;
 								}).catch(error => {
